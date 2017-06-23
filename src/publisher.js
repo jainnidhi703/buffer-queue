@@ -20,7 +20,7 @@ function addToBufferQueue({ queue, value, size }) {
   }
   if (map[queue] instanceof Array && map[queue].length == bufferSizes[queue]) {
     console.log(`Queue: ${queue} Published:`, map[queue]);
-    publisher.publish(`queue:${queue}`, JSON.stringify(map[queue]));
+    publisher.publish(queue, JSON.stringify(map[queue]));
     map[queue] = [];
   }
 }
