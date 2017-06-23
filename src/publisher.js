@@ -1,10 +1,12 @@
 const express = require('express');
-const publisher = require('redis').createClient();
-
+const redis = require('redis');
+const { redisPort, redisHost } = require('./config');
 const router = express.Router();
 
 const map = {};
 const bufferSizes = {};
+
+const publisher = redis.createClient(redisPort, redisHost);
 
 function addToBufferQueue({ queue, value, size }) {
   if (!map[queue]) {
