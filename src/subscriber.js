@@ -8,7 +8,8 @@ const queueName = process.argv[2];
 if (queueName) {
   subscriber.subscribe(queueName);
 } else {
-  throw new Error('Pass a queue key');
+  console.log('Pass a queue key');
+  process.exit();
 }
 
 subscriber.on('message', function(channel, message) {
