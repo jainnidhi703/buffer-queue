@@ -1,7 +1,5 @@
-const express = require('express');
 const redis = require('redis');
 const { redisPort, redisHost } = require('./config');
-const router = express.Router();
 
 const map = {};
 const bufferSizes = {};
@@ -27,18 +25,4 @@ function addToBufferQueue({ queue, value, size }) {
   }
 }
 
-router.post('/', (req, res) => {
-  const body = req.body;
-  if (body.queue && body.value) {
-    try {
-      addToBufferQueue(body);
-      res.send('Added message to Queue!!!');
-    } catch (error) {
-      res.status(400).send(error.message);
-    }
-  } else {
-    res.status(400).send('Invalid Request!!!');
-  }
-});
-
-module.exports = router;
+module.exports = addToBufferQueue;
