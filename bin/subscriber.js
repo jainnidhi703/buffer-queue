@@ -1,3 +1,7 @@
+/**
+ * Starts a subscriber client on a particular queue Qi
+ */
+
 const redis = require('redis');
 const { redisPort, redisHost } = require('./config');
 
@@ -9,9 +13,9 @@ if (queueName) {
   subscriber.subscribe(queueName);
 } else {
   console.log('Pass a queue key');
-  process.exit();
+  process.exit(1);
 }
 
-subscriber.on('message', function(channel, message) {
+subscriber.on('message', (channel, message) => {
   console.log(`Received Message: ${message}, Queue: ${channel}`);
 });
