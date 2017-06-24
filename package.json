@@ -4,6 +4,9 @@
   "description": "A buffered queue with publisher subscriber model",
   "main": "src/app.js",
   "scripts": {
+    "start": "node .",
+    "subscriber": "node bin/subscriber.js",
+    "post-publish-message": "node bin/post-publish-message.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "nidhi jain",
