@@ -1,3 +1,7 @@
+/**
+ * Posts a message consisting of queue number, value and buffer size to localhost:3000
+ */
+
 const request = require('request');
 
 if (!process.argv[2] || !process.argv[3]) {
@@ -16,7 +20,7 @@ request.post(
     url: 'http://localhost:3000/publish',
     json: jsonBody,
   },
-  function(error, response, body) {
+  (error, response, body) => {
     console.log(body);
   }
 );

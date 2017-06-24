@@ -7,7 +7,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', function(req, res) {
-  res.send('Hello World!');
+  res.send('Go to /publish to publish a message!');
 });
 
 app.use('/publish', publish);
