@@ -15,6 +15,14 @@ Use something like [nvm](https://github.com/creationix/nvm) to install node.js
 
 **Docker**: `docker run --name redis -d -p 6379:6379 redis:3.2.9 redis-server --appendonly yes`
 
+### NPM Dependencies
+```sh
+$ npm i
+
+# Or
+
+$ yarn
+```
 
 ## Config
 If you wish not to install Redis, you can use a hosted redis, all you need to make it connect it to a remote redis-server is to pass the below environment variables.
