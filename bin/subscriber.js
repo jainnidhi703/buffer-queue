@@ -3,7 +3,7 @@
  */
 
 const redis = require('redis');
-const { redisPort, redisHost } = require('./config');
+const { redisPort, redisHost } = require('../config');
 
 const subscriber = redis.createClient(redisPort, redisHost);
 

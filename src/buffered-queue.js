@@ -1,5 +1,5 @@
 const redis = require('redis');
-const { redisPort, redisHost } = require('./config');
+const { redisPort, redisHost } = require('../config');
 
 const map = {};
 const bufferSizes = {};
