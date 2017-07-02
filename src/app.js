@@ -14,11 +14,11 @@ app.get('/', (req, res) => {
   res.send('Go to /publish to publish a message!');
 });
 
-app.post('/publish', (req, res) => {
+app.post('/publish', async (req, res) => {
   const body = req.body;
   if (body.queue && body.value) {
     try {
-      addToBufferQueue(body);
+      await addToBufferQueue(body);
       res.send('Added message to Queue!!!');
     } catch (error) {
       res.status(400).send(error.message);

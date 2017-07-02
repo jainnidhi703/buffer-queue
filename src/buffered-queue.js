@@ -1,27 +1,38 @@
 const redis = require('redis');
+const Promise = require('bluebird');
 const { redisPort, redisHost } = require('../config');
 
-const map = {};
-const bufferSizes = {};
+Promise.promisifyAll(redis.RedisClient.prototype);
 
+const map = {};
 const publisher = redis.createClient(redisPort, redisHost);
 
-function addToBufferQueue({ queue, value, size }) {
-  if (!map[queue]) {
+async function addToBufferQueue({ queue, value, size }) {
+  const reply = await publisher.lrangeAsync(queue, 0, -1);
+  map[queue] = reply;
+
+  const bufferSize = await publisher.hgetAsync('bufferSize', queue);
+
+  if (!bufferSize) {
     if (size) {
       map[queue] = [];
-      bufferSizes[queue] = size;
+      await publisher.hmsetAsync('bufferSize', queue, size);
+      bufferSize = size;
     } else {
       throw new Error('size is mandatory for first message');
     }
   }
-  if (bufferSizes[queue]) {
+
+  if (bufferSize) {
     map[queue].push(value);
+    await publisher.rpushAsync(queue, value);
   }
-  if (map[queue] instanceof Array && map[queue].length == bufferSizes[queue]) {
+
+  if (map[queue] instanceof Array && map[queue].length == bufferSize) {
     console.log(`Queue: ${queue} Published:`, map[queue]);
     publisher.publish(queue, JSON.stringify(map[queue]));
     map[queue] = [];
+    publisher.del(queue);
   }
 }
 
