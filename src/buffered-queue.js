@@ -32,7 +32,7 @@ async function addToBufferQueue({ queue, value, size }) {
     console.log(`Queue: ${queue} Published:`, map[queue]);
     publisher.publish(queue, JSON.stringify(map[queue]));
     map[queue] = [];
-    publisher.del(queue);
+    //TODO: If there are no subscribers for a queue LTRIM of redis can be used to limit the buffer size.
   }
 }
 
